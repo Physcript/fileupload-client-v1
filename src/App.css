@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.ui .home-page {
+  margin-top: 2em;
+}
+
+.ui .form-register {
+  display:flex !important;
+  flex-direction:column;
+  gap:10px;
+}
+.ui .profile-register  {
+  width: 150px;
+  height: 150px;
+  text-align:center;
+  justify-content:center;
+  align-items:center;
+  align-self:center;
+}

@@ -4,10 +4,32 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { ApolloProvider,ApolloClient,InMemoryCache } from '@apollo/client'
+import { createUploadLink } from 'apollo-upload-client'
+import { setContext } from '@apollo/client/link/context'
+
+const httpLink = new createUploadLink({
+  uri: 'http://localhost:4000/graphql'
+})
+const authLink = setContext( (_,{headers}) => {
+  const token = localStorage.getItem('token')
+  return {
+    headers:{
+      ...headers,
+      authorization: token ? `Berear ${token}` : ''
+    }
+  }
+})
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink) ,
+  cache: new InMemoryCache()
+})
+
 ReactDOM.render(
-  <React.StrictMode>
+  <ApolloProvider client = {client}>
     <App />
-  </React.StrictMode>,
+  </ApolloProvider>,
   document.getElementById('root')
 );
 
